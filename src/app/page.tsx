@@ -1,101 +1,115 @@
-import Image from "next/image";
+import { Button } from "./component/ui/button"
+import Link from "next/link"
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex flex-col gap-8">
+      {/* Hero Section */}
+      <section className="relative h-[600px] w-full bg-[url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04')] bg-cover bg-center">
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="container relative flex h-full flex-col items-center justify-center text-center text-white">
+          <h1 className="mb-4 text-5xl font-bold">New Season Arrivals</h1>
+          <p className="mb-8 text-xl">Discover the latest trends in fashion</p>
+          <Button asChild size="lg" className="bg-white text-black hover:bg-white/90">
+            <Link href="/shop">Shop Now</Link>
+          </Button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* Categories */}
+      <section className="container py-16">
+        <h2 className="mb-8 text-center text-3xl font-bold">Shop by Category</h2>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {categories.map((category) => (
+            <Link
+              key={category.name}
+              href={category.href}
+              className="group relative h-[400px] overflow-hidden rounded-lg"
+            >
+              <img
+                src={category.image}
+                alt={category.name}
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/40" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <h3 className="text-2xl font-bold text-white">{category.name}</h3>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Featured Products */}
+      <section className="bg-muted py-16">
+        <div className="container">
+          <h2 className="mb-8 text-center text-3xl font-bold">Featured Products</h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
+            {featuredProducts.map((product) => (
+              <Link
+                key={product.name}
+                href={`/product/${product.id}`}
+                className="group rounded-lg bg-background p-4 transition-shadow hover:shadow-lg"
+              >
+                <div className="mb-4 aspect-square overflow-hidden rounded-md">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+                <h3 className="mb-2 font-semibold">{product.name}</h3>
+                <p className="text-muted-foreground">${product.price}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
-  );
+  )
 }
+
+const categories = [
+  {
+    name: "Women's Fashion",
+    href: '/shop/women',
+    image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f',
+  },
+  {
+    name: "Men's Fashion",
+    href: '/shop/men',
+    image: 'https://images.unsplash.com/photo-1488161628813-04466f872be2',
+  },
+  {
+    name: "Kid's Fashion",
+    href: '/shop/kids',
+    image: 'https://images.unsplash.com/photo-1471286174890-9c112ffca5b4',
+  },
+]
+
+const featuredProducts = [
+  {
+    id: 1,
+    name: 'Classic White T-Shirt',
+    price: 29.99,
+    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab',
+  },
+  {
+    id: 2,
+    name: 'Denim Jacket',
+    price: 89.99,
+    image: 'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d',
+  },
+  {
+    id: 3,
+    name: 'Summer Dress',
+    price: 59.99,
+    image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c',
+  },
+  {
+    id: 4,
+    name: 'Casual Sneakers',
+    price: 79.99,
+    image: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2',
+  },
+]
